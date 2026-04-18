@@ -2,103 +2,105 @@
 
 import React from "react";
 import { InfiniteMovingCards } from "./ui/infinite-moving-cards";
+import { motion, useInView } from "framer-motion";
 
 export default function Testimonials() {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
-    <div id="testimonials" className="min-h-[45rem] relative overflow-hidden"
-      style={{
-        background: `
-          radial-gradient(circle at 20% 20%, rgba(200, 16, 46, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(255, 45, 98, 0.1) 0%, transparent 50%),
-          linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 1))
-        `
-      }}
+    <div
+      id="testimonials"
+      ref={ref}
+      className="relative overflow-hidden py-24"
+      style={{ background: "linear-gradient(to bottom, #050505, #000000)" }}
     >
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-[#c8102e]/20 to-transparent" />
-        <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ff2d62]/20 to-transparent" />
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-[#c8102e]/20 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+
+      {/* Background glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[400px] bg-[#c8102e]/6 rounded-full blur-[100px]" />
       </div>
 
-      {/* Content container */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Header section */}
-        <div className="text-center mb-12">
-          <span className="text-xs md:text-sm font-medium tracking-widest inline-block mb-4 relative">
-            <span className="py-2 px-4 relative z-10 bg-gradient-to-r from-[#c8102e] to-[#ff2d62] text-transparent bg-clip-text">
-              TESTIMONIALS
-              <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/10 to-[#ff2d62]/10 blur-xl rounded-full" />
-              <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/5 to-white/50 rounded-full" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-14"
+        >
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="h-px w-8 bg-[#c8102e]" />
+            <span className="text-xs font-semibold tracking-[0.25em] text-[#c8102e] uppercase">Testimonials</span>
+            <span className="h-px w-8 bg-[#c8102e]" />
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 leading-tight">
+            Real Businesses,{" "}
+            <span
+              className="italic bg-gradient-to-r from-[#c8102e] to-[#ff2d62] bg-clip-text text-transparent"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Real Results.
             </span>
-            <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/10 to-[#ff2d62]/10 blur-xl rounded-full" />
-            <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/5 to-[#ff2d62]/5 rounded-full" />
-          </span>
-          <h2 className="text-[1.4rem] md:text-5xl font-bold mb-4">
-            <div className="whitespace-nowrap">
-              <span className="text-white">Real </span>
-              <span className="bg-gradient-to-r from-[#b40623] to-[#a90404e2] bg-clip-text text-transparent" style={{ fontFamily: "'Dancing Script', cursive" }}>CEOs, </span>
-
-              <span className="text-white">Real </span>
-              <span className="bg-gradient-to-r from-[#b40623] to-[#a90404e2] bg-clip-text text-transparent" style={{ fontFamily: "'Dancing Script', cursive" }}>Results, </span>
-
-              <span className="text-white">Real </span>
-              <span className="bg-gradient-to-r from-[#b40623] to-[#a90404e2] bg-clip-text text-transparent" style={{ fontFamily: "'Dancing Script', cursive" }}>Freedom, </span>
-
-
-            </div>
-            <div className="mt-1 md:mt-3 text-gray-300 font-medium">
-              
-              <span className="bg-gradient-to-r from-[#b40623] to-[#a90404e2] bg-clip-text text-transparent"></span>
-            </div>
           </h2>
-          <p className="text-[0.9rem] md:text-base text-gray-400 max-w-2xl mx-auto">
-            Discover how companies shifted from hoping from results to experiencing <br /> predictable, steady  growth through Ai Automation System
+          <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
+            From 3 leads a week to 30. From revenue plateaus to first six-figure months. Here's what our clients say.
           </p>
-        </div>
+        </motion.div>
 
         {/* Testimonials slider */}
-        <div className="relative">
-          <InfiniteMovingCards 
-            items={testimonials} 
-            direction="right" 
-            speed="slow" 
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="relative"
+        >
+          <InfiniteMovingCards
+            items={testimonials}
+            direction="left"
+            speed="slow"
           />
-        </div>
+        </motion.div>
       </div>
+
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
     </div>
   );
 }
 
-// Testimonials Data
 const testimonials = [
   {
     quote:
-      "I was honestly skeptical at first — we've tried agencies before, and they just threw a bunch of Facebook ads at us. Sanskar and his co-founder actually built a full system for us: lead capture, follow-up, automations... all of it. We've been booking more trial sessions in the last month than we did all of last quarter. These guys just get it.",
-    name: "Mike R",
-    title: "Owner @ IronCore Fitness (Gym/Fitness Studio)",
+      "I was skeptical. We've tried agencies before, and they just threw Facebook ads at us. Sanskar and his co-founder actually built a full system: lead capture, follow-up, automations. We've been booking more trial sessions in the last month than we did all of last quarter.",
+    name: "Mike R.",
+    title: "Owner, IronCore Fitness",
+    metric: "3× more bookings in 30 days",
   },
   {
-    quote: "Our brand was doing decent numbers but we hit a ceiling. Blix Media helped us scale without breaking what was already working. Their email & ad strategies literally doubled our ROAS in under 30 days. But more than that — they communicated everything, kept us in the loop, and gave us clarity like never before.",
+    quote: "Their email and ad strategies doubled our ROAS in under 30 days. But more than that: they communicated everything, kept us in the loop, and gave us clarity like we'd never had before with any agency.",
     name: "Jessica L.",
-    title: "Founder @ WildAura Skincare (eCommerce)",
+    title: "Founder, WildAura Skincare",
+    metric: "2× ROAS in under 30 days",
   },
   {
-    quote: "We were getting maybe 3-4 leads a week, mostly referrals. Blix Media came in, set up our outbound + paid campaigns, and now we're averaging 25-30 qualified leads a week. No fluff, no nonsense. Just results. Honestly, best decision I've made this year.",
+    quote: "We were getting maybe 3 to 4 leads a week, mostly referrals. Blix Media came in, set up our outbound and paid campaigns, and now we're averaging 25 to 30 qualified leads a week. No fluff. Just results.",
     name: "Chris D.",
-    title: "Co-Owner @ ArcticAir Pros (HVAC)",
+    title: "Co-Owner, ArcticAir Pros (HVAC)",
+    metric: "3 leads/wk to 25+ leads/wk",
   },
   {
     quote:
-      "What stood out was how deep they went into my offer and niche. It wasn't just ads — it was positioning, copy, funnel, follow-up… everything. It felt like they were part of my team. My calendar's been full, and I'm scaling my offer now — wouldn't have been possible without them.",
+      "It wasn't just ads. It was positioning, copy, funnel, follow-up... everything. It felt like they were part of my team. My calendar has been full, and I'm scaling my offer now. Wouldn't have been possible without them.",
     name: "Natasha P.",
-    title: "Online Coach @ LevelUp Performance ",
+    title: "Online Coach, LevelUp Performance",
+    metric: "Fully booked calendar",
   },
-  
   {
     quote:
-      "We were running ads already, but the backend was messy. Blix came in, cleaned up our CRM, built a new funnel, and plugged in AI follow-ups. Everything just clicked. We hit our first 6-figure month within 8 weeks of working together. Absolute pros.",
+      "They came in, cleaned up our CRM, built a new funnel, and plugged in AI follow-ups. Everything just clicked. We hit our first six-figure month within 8 weeks of working together. Absolute pros.",
     name: "Ankit S.",
-    title: "Co-founder @ Aura Interiors ",
+    title: "Co-founder, Aura Interiors",
+    metric: "First six-figure month in 8 weeks",
   },
 ];

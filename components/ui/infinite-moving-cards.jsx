@@ -2,10 +2,9 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { FaStar } from "react-icons/fa";
 
 export const InfiniteMovingCards = ({
-  title = "What Our Clients Say",
-  subtitle = "Real experiences from our valued customers.",
   items,
   direction = "left",
   speed = "fast",
@@ -17,92 +16,91 @@ export const InfiniteMovingCards = ({
   const [start, setStart] = useState(false);
 
   useEffect(() => {
-    setupAnimation();
-  }, []);
-
-  function setupAnimation() {
     if (containerRef.current && scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children);
-      scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
-        scrollerRef.current.appendChild(duplicatedItem);
+      Array.from(scrollerRef.current.children).forEach((item) => {
+        scrollerRef.current.appendChild(item.cloneNode(true));
       });
-
-      updateDirection();
-      updateSpeed();
+      containerRef.current.style.setProperty("--animation-direction", direction === "left" ? "forwards" : "reverse");
+      containerRef.current.style.setProperty("--animation-duration", { fast: "20s", normal: "40s", slow: "80s" }[speed] || "40s");
       setStart(true);
     }
-  }
-
-  const updateDirection = () => {
-    if (containerRef.current) {
-      containerRef.current.style.setProperty(
-        "--animation-direction",
-        direction === "left" ? "forwards" : "reverse"
-      );
-    }
-  };
-
-  const updateSpeed = () => {
-    if (containerRef.current) {
-      const speedMap = { fast: "20s", normal: "40s", slow: "80s" };
-      containerRef.current.style.setProperty("--animation-duration", speedMap[speed] || "40s");
-    }
-  };
+  }, []);
 
   return (
-    <section className={`w-full py-12 px-4 md:px-8 lg:px-16 ${className}`}>
-
-      {/* Infinite Scrolling Container */}
+    <section className={`w-full ${className}`}>
       <div ref={containerRef} className="relative overflow-hidden">
-        {/* Enhanced gradient overlays */}
-        <div className="absolute left-0 top-0 h-full w-[5%] bg-gradient-to-r from-black via-black/90 to-transparent z-10" />
-        <div className="absolute right-0 top-0 h-full w-[5%] bg-gradient-to-l from-black via-black/90 to-transparent z-10" />
+        <div className="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
         <motion.ul
           ref={scrollerRef}
-          className={`flex min-w-full gap-6 py-4 w-max ${
-            start ? "animate-scroll" : ""
-          } ${pauseOnHover ? "hover:[animation-play-state:paused]" : ""}`}
+          className={`flex min-w-full gap-5 py-4 w-max ${start ? "animate-scroll" : ""} ${pauseOnHover ? "hover:[animation-play-state:paused]" : ""}`}
         >
           {items.map((item, idx) => (
             <motion.li
               key={idx}
-              className="group relative w-[300px] md:w-[400px] shrink-0 perspective-1000"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.2 }}
+              className="group relative w-[320px] md:w-[400px] shrink-0"
+              whileHover={{ y: -5, transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] } }}
             >
-              <div className="relative h-full overflow-hidden rounded-xl bg-gradient-to-bl from-[#c8102e]/5 via-black to-black border border-[#c8102e]/10 p-8 transition-all duration-500 group-hover:border-[#ff2d62]/50 group-hover:shadow-[0_0_30px_-5px_rgba(200,16,46,0.3)] backdrop-blur-sm">
-                {/* Animated gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/0 via-[#ff2d62]/10 to-[#c8102e]/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-                
-                {/* Quote mark decoration */}
-                <div className="absolute top-4 right-4 text-6xl font-serif text-[#c8102e]/10 group-hover:text-[#ff2d62]/20 transition-colors duration-500">"</div>
-                
-                <div className="relative flex flex-col h-full z-10">
-                  {/* Quote text */}
-                  <p className="flex-grow text-sm md:text-base text-gray-300 leading-relaxed mb-6 transition-colors duration-300 group-hover:text-gray-100">
-                    {item.quote}
+              {/* Double-bezel card */}
+              <div
+                className="rounded-[1.75rem] p-[1.5px] h-full"
+                style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(200,16,46,0.07) 100%)" }}
+              >
+                <div
+                  className="rounded-[calc(1.75rem-1.5px)] p-7 h-full relative overflow-hidden flex flex-col"
+                  style={{
+                    background: "rgba(6,6,6,0.9)",
+                    backdropFilter: "blur(20px) saturate(150%)",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07)"
+                  }}
+                >
+                  {/* Hover glow */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500"
+                    style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(200,16,46,0.07) 0%, transparent 55%)" }} />
+
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-5 relative z-10">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} className="text-[#c8102e] text-xs" />
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="flex-grow text-white/50 text-sm leading-relaxed mb-5 group-hover:text-white/65 transition-colors duration-500 relative z-10">
+                    "{item.quote}"
                   </p>
 
-                  {/* Author info with enhanced hover effects */}
-                  <div className="flex items-center gap-4">
-                    <div>
-                      <h4 className="text-sm font-semibold text-white group-hover:text-[#ff2d62] transition-colors duration-300">
-                        {item.name}
-                      </h4>
-                      <p className="text-xs text-gray-500 group-hover:text-[#ff2d62]/70 transition-colors duration-300">
-                        {item.title}
-                      </p>
+                  {/* Metric chip */}
+                  {item.metric && (
+                    <div className="mb-5 relative z-10">
+                      <span
+                        className="inline-block text-[11px] px-3 py-1.5 rounded-full text-[#c8102e] font-semibold"
+                        style={{ background: "rgba(200,16,46,0.08)", boxShadow: "0 0 0 1px rgba(200,16,46,0.2)" }}
+                      >
+                        {item.metric}
+                      </span>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Animated border lines */}
-                  <div className="absolute bottom-0 left-0 w-full h-[1px]">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff2d62] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-x-[-100%] group-hover:translate-x-0" />
-                  </div>
-                  <div className="absolute top-0 right-0 h-full w-[1px]">
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#c8102e] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-[-100%] group-hover:translate-y-0" />
+                  {/* Author */}
+                  <div
+                    className="flex items-center gap-3 pt-4 relative z-10"
+                    style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                  >
+                    <div
+                      className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(200,16,46,0.3), rgba(200,16,46,0.08))",
+                        boxShadow: "0 0 0 1px rgba(200,16,46,0.2)"
+                      }}
+                    >
+                      <span className="text-[#c8102e] font-bold text-xs">{item.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <p className="text-white text-sm font-semibold">{item.name}</p>
+                      <p className="text-white/35 text-xs">{item.title}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -113,18 +111,11 @@ export const InfiniteMovingCards = ({
 
       <style jsx global>{`
         @keyframes scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(calc(-50% - 1.5rem));
-          }
+          from { transform: translateX(0); }
+          to { transform: translateX(calc(-50% - 1.25rem)); }
         }
         .animate-scroll {
           animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
-        }
-        .perspective-1000 {
-          perspective: 1000px;
         }
       `}</style>
     </section>

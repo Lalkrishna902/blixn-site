@@ -46,6 +46,7 @@ export const Footer = () => {
                 <div>
                   <p className="text-gray-400 text-sm">Email</p>
                   <a href="mailto:lalkrishna@blixn.io" className="text-white hover:text-red-500 transition-colors">lalkrishna@blixn.io</a>
+                  <a href="mailto:sanskar@blixn.io" className="block text-white hover:text-red-500 transition-colors">sanskar@blixn.io</a>
                 </div>
               </div>
               
@@ -58,7 +59,7 @@ export const Footer = () => {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Location</p>
-                  <p className="text-white">UAE, Dubai</p>
+                  <p className="text-white">Worldwide</p>
                 </div>
               </div>
             </div>

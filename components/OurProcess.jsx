@@ -1,203 +1,165 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { FaUsers, FaPencilAlt, FaGlobe, FaChartLine } from "react-icons/fa";
+import { FaUsers, FaPencilAlt, FaGlobe, FaChartLine, FaArrowRight } from "react-icons/fa";
 
 const steps = [
-  {
-    title: "Onboarding Call",
-    description: "We dive deep into your business to understand what drives you and what's holding you back. We'll discuss your goals, your audience, and your pain points to craft a custom game plan.",
-    icon: <FaUsers className="text-[#c8102e]" />,
-  },
-  {
-    title: "Strategy and Setup",
-    description: "Within 7 days, we'll develop a personalized system, according to your goals, create the ultimate framework, and optimize every detail to ensure a high level of success.",
-    icon: <FaPencilAlt className="text-[#c8102e]" />,
-  },
-  {
-    title: "System Goes Live",
-    description: "Once we launch our system, you'll start seeing results within days. Qualified leads will begin flowing into your pipeline, and we'll continuously refine the system to keep the momentum going.",
-    icon: <FaGlobe className="text-[#c8102e]" />,
-  },
-  {
-    title: "Improve and Scale",
-    description: "We don't just build a generic system for you. Our team analyzes the data, tests new approaches, and keeps tweaking until we squeeze every bit of ROI out of your campaign.",
-    icon: <FaChartLine className="text-[#c8102e]" />,
-  },
+  { number: "01", title: "Onboarding Call",    description: "We dive deep into your business: goals, audience, bottlenecks. By the end of this call we have a fully custom game plan ready.",                                      icon: FaUsers,      timeline: "Day 1" },
+  { number: "02", title: "Strategy & Setup",   description: "Within 7 days, we build your automation stack from scratch. CRM, outbound, ads, AI agents. Every detail optimized before we go live.",                             icon: FaPencilAlt,  timeline: "Days 2 to 7" },
+  { number: "03", title: "System Goes Live",   description: "We launch your system and qualified leads start flowing within days. Real results, not promises. Your pipeline becomes predictable.",                                 icon: FaGlobe,      timeline: "Days 7 to 14" },
+  { number: "04", title: "Improve & Scale",    description: "We analyze data weekly, test new angles, and squeeze every drop of ROI from your campaigns. This is where good becomes exceptional.",                               icon: FaChartLine,  timeline: "Ongoing" },
 ];
 
-// Enhanced animation variants with 3D effects
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
+  show: { opacity: 1, transition: { staggerChildren: 0.14, delayChildren: 0.05 } }
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20, rotateX: -45 },
-  show: { 
-    opacity: 1, 
-    y: 0,
-    rotateX: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 15,
-      duration: 0.8
-    }
-  }
+const cardVariants = {
+  hidden: { opacity: 0, y: 36, filter: "blur(8px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } }
 };
 
 export default function OurProcess() {
   return (
-    <section 
-      id="process" 
-      className="min-h-screen w-full py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
-      style={{
-        background: `
-          radial-gradient(circle at 20% 20%, rgba(200, 16, 46, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(200, 16, 46, 0.08) 0%, transparent 50%),
-          linear-gradient(to bottom, rgba(10, 10, 10, 0.98), rgba(5, 5, 5, 1))
-        `
-      }}
-    >
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-[#c8102e]/20 to-transparent" />
-        <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#c8102e]/20 to-transparent" />
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-[#c8102e]/20 to-transparent" />
+    <section id="process" className="w-full py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-black">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+
+      {/* Ambient glow */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute bottom-1/4 right-0 w-[600px] h-[400px]"
+          style={{ background: "radial-gradient(ellipse, rgba(200,16,46,0.07) 0%, transparent 65%)" }} />
       </div>
 
-      <div className="max-w-7xl mx-auto w-full">
-        {/* Section Header - Enhanced 3D Effect */}
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <span className="h-px w-8 bg-[#c8102e]" />
+            <div className="liquid-glass-pill inline-flex items-center px-4 py-1.5 rounded-full">
+              <span className="text-[10px] font-semibold tracking-[0.22em] text-white/70 uppercase">Our Process</span>
+            </div>
+            <span className="h-px w-8 bg-[#c8102e]" />
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[3.2rem] font-bold text-white mb-5 leading-[1.1]">
+            From Zero to{" "}
+            <span className="italic bg-gradient-to-r from-[#c8102e] to-[#ff2d62] bg-clip-text text-transparent"
+              style={{ fontFamily: "'Playfair Display', serif" }}>
+              Fully Automated
+            </span>
+            {" "}in 2 Weeks
+          </h2>
+          <p className="text-white/45 text-base sm:text-lg max-w-2xl mx-auto">
+            A proven 4-step methodology that turns chaotic sales ops into a predictable growth machine.
+          </p>
+        </motion.div>
+
+        {/* Cards — Double-Bezel architecture */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16 md:mb-20"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-5"
         >
-          {/* Section Label with 3D Hover Effect */}
-          <motion.div 
-            className="inline-block mb-4 relative group"
-            variants={itemVariants}
-          >
-            <div className="relative z-10 perspective-1000">
-              <div className="transform-style-preserve-3d transition-transform duration-700 group-hover:rotate-x-5">
-                <motion.span
-                  className="text-xs md:text-sm font-medium tracking-widest inline-block relative"
-                >
-                  <span className="py-2 px-4 relative z-10 bg-gradient-to-r from-[#c8102e] to-[#ff2d62] text-transparent bg-clip-text">
-                    Process
-                    {/* Decorative glows */}
-                    <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/10 to-[#ff2d62]/10 blur-xl rounded-full" />
-                    <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/5 to-white/50 rounded-full" />
-                  </span>
-                  {/* Extra glows for depth */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/10 to-[#ff2d62]/10 blur-xl rounded-full" />
-                  <span className="absolute inset-0 bg-gradient-to-r from-[#c8102e]/5 to-[#ff2d62]/5 rounded-full" />
-                </motion.span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Main Heading */}
-          <motion.h2
-            className="text-3xl md:text-5xl font-bold text-white leading-tight mb-6"
-            variants={itemVariants}
-          >
-            Where <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b40623] to-[#a90404e2]">Strategy</span> Meets <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b40623] to-[#a90404e2]">Innovation</span>
-          </motion.h2>
-
-          {/* Subtitle Text */}
-          <motion.p
-            className="mt-3 text-gray-400 mx-auto max-w-2xl"
-            variants={itemVariants}
-            style={{
-              fontSize: "clamp(1rem, 3vw, 1.5rem)",
-              lineHeight: "clamp(1.2, 3.5vw, 1.6)"
-            }}
-          >
-            Proven methodology for Scale & Growth
-          </motion.p>
-        </motion.div>
-
-
-        {/* Process Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-10">
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              variants={itemVariants}
-              whileHover={{ 
-                y: -10,
-                rotateX: 5,
-                rotateY: 0,
-                scale: 1.03,
-                boxShadow: "0 25px 50px -12px rgba(200, 16, 46, 0.15)"
-              }}
-              className="group relative rounded-xl px-8 py-4 border border-gray-800 hover:border-[#c8102e]/40 transition-all duration-500 bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm h-full"
+              variants={cardVariants}
+              whileHover={{ y: -6, transition: { duration: 0.35, ease: [0.32, 0.72, 0, 1] } }}
+              /* Outer shell */
+              className="group rounded-[2rem] p-[1.5px]"
               style={{
-                transformStyle: "preserve-3d",
-                perspective: "1000px"
+                background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, rgba(200,16,46,0.08) 100%)"
               }}
             >
-              {/* Icon with enhanced glow */}
-              <motion.div
-                className="w-14 h-14 flex items-center justify-center rounded-xl mb-6 bg-gradient-to-br from-gray-800 to-gray-900 group-hover:from-[#c8102e]/10 group-hover:to-[#c8102e]/20 transition-all duration-500 shadow-lg shadow-black/50"
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 0 20px rgba(200, 16, 46, 0.4)"
-                }}
-                transition={{ 
-                  duration: 0.4,
-                  ease: "easeOut"
+              {/* Inner core */}
+              <div
+                className="rounded-[calc(2rem-1.5px)] p-8 h-full relative overflow-hidden"
+                style={{
+                  background: "rgba(8,8,8,0.85)",
+                  backdropFilter: "blur(20px) saturate(150%)",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.4)"
                 }}
               >
+                {/* Subtle inner glow on hover */}
                 <motion.div
-                  whileHover={{
-                    scale: 1.3,
-                    rotate: 5
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    type: "spring",
-                    stiffness: 400
-                  }}
-                  className="text-2xl text-[#c8102e] group-hover:text-[#ff2d62] transition-colors duration-300"
-                >
-                  {step.icon}
-                </motion.div>
-              </motion.div>
-   
-              {/* Content */}
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-[#c8102e] transition-colors duration-300">
-                {step.title}
-              </h3>
-              <p className="text-md md:text-lg text-gray-300 leading-relaxed">
-                {step.description}
-              </p>
+                  className="absolute inset-0 rounded-[calc(2rem-1.5px)] opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500"
+                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(200,16,46,0.08) 0%, transparent 60%)" }}
+                />
 
-              {/* Enhanced hover indicator */}
-              <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#c8102e] to-[#ff2d62] group-hover:w-full transition-all duration-700 rounded-full" />
-              
-              {/* 3D effect elements */}
-              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: "radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.08), transparent 70%)",
-                  transform: "translateZ(-10px)"
-                }}
-              />
-              <div className="absolute inset-0 rounded-xl border border-[#c8102e]/0 group-hover:border-[#c8102e]/10 transition-all duration-700" />
+                {/* Step number + timeline */}
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-[3.5rem] font-bold leading-none select-none"
+                    style={{ color: "rgba(255,255,255,0.04)" }}>
+                    {step.number}
+                  </span>
+                  <div className="liquid-glass-pill px-3 py-1.5 rounded-full">
+                    <span className="text-[11px] font-medium text-[#c8102e]">{step.timeline}</span>
+                  </div>
+                </div>
+
+                {/* Icon + title */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-500 group-hover:scale-110"
+                    style={{
+                      background: "rgba(200,16,46,0.1)",
+                      boxShadow: "0 0 0 1px rgba(200,16,46,0.2), inset 0 1px 0 rgba(255,255,255,0.08)"
+                    }}
+                  >
+                    <step.icon className="text-[#c8102e] text-lg" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">{step.title}</h3>
+                </div>
+
+                <p className="text-white/50 text-[0.93rem] leading-relaxed group-hover:text-white/65 transition-colors duration-500">
+                  {step.description}
+                </p>
+              </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-5"
+        >
+          <p className="text-white/40 text-sm">
+            Most clients see results in{" "}
+            <span className="text-white/75 font-medium">7 to 14 days.</span>
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(200,16,46,0.35)" }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => window.open("https://calendly.com/wolfwisemedia/letsmakesomemoney", "_blank")}
+            className="cursor-pointer group shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-white font-semibold text-sm"
+            style={{
+              background: "linear-gradient(135deg, #c8102e, #e8193a)",
+              boxShadow: "0 0 0 1px rgba(200,16,46,0.4), inset 0 1px 0 rgba(255,255,255,0.12)"
+            }}
+            transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+          >
+            Start the Process
+            <motion.span className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center"
+              whileHover={{ scale: 1.15, x: 1 }} transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}>
+              <FaArrowRight size={9} />
+            </motion.span>
+          </motion.button>
+        </motion.div>
       </div>
+
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
     </section>
   );
 }

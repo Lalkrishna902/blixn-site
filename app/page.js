@@ -7,21 +7,21 @@ import OurProcess from "@/components/OurProcess";
 import { OurServices } from "@/components/OurService";
 import { SubFooter } from "@/components/SubFooter";
 import Testimonials from "@/components/Testimonials";
+import AboutSection from "@/components/AboutSection";
 
 export default function Home() {
   return (
-    <>
-    <div className="bg-gradient-to-bl from-red-900 via-black to-black">
-    <Navbar />
-    <LandingPage />
-    <OurProcess />
-    <OurServices />
-    <NumberOfPeopleUse />
-    <Testimonials />
-    <FAQs />
-    <SubFooter />
-    <Footer />
+    <div className="bg-black">
+      <Navbar />
+      <LandingPage />
+      <OurProcess />
+      <OurServices />
+      <AboutSection />
+      <NumberOfPeopleUse />
+      <Testimonials />
+      <FAQs />
+      <SubFooter />
+      <Footer />
     </div>
-    </>
   );
 }

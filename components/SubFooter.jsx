@@ -1,113 +1,123 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { FaArrowRight } from "react-icons/fa";
+import { BsCheckCircleFill } from "react-icons/bs";
+
+const bullets = [
+  "Free 30-min strategy call",
+  "No agency fluff or account managers",
+  "First results in 7 to 14 days",
+];
 
 export const SubFooter = () => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
+
   return (
-    <div className="relative w-full overflow-hidden rounded-t-[2.5rem] bg-gradient-to-bl from-[#c8102e] via-black to-black">
-      {/* Wave Animation */}
-      <div className="absolute right-0 top-0 h-full w-1/2 overflow-hidden">
+    <div ref={ref} className="relative w-full overflow-hidden"
+      style={{ background: "linear-gradient(to bottom, #050505, #000)" }}>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+
+      {/* Ambient orbs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
-          initial={{ rotate: 0, scale: 1 }}
-          animate={{ 
-            rotate: [0, -5, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute -right-20 top-1/2 h-[600px] w-[600px] -translate-y-1/2"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full"
+          style={{ background: "radial-gradient(ellipse, rgba(200,16,46,0.15) 0%, transparent 65%)" }}
+          animate={{ scale: [1, 1.04, 1], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-32 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 28, filter: "blur(8px)" }}
+          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         >
-          <motion.div 
-            initial={{ rotate: 0 }}
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute h-full w-full rounded-[42%] opacity-20 blur-2xl"
-          />
-        </motion.div>
-      </div>
+          {/* Eyebrow */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="h-px w-8 bg-[#c8102e]" />
+            <div className="liquid-glass-pill inline-flex items-center gap-2 px-4 py-1.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#c8102e] animate-pulse" />
+              <span className="text-[10px] font-semibold tracking-[0.22em] text-white/70 uppercase">Ready to scale?</span>
+            </div>
+            <span className="h-px w-8 bg-[#c8102e]" />
+          </div>
 
-      {/* Content Container */}
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="relative z-10">
-          {/* Text Content */}
+          {/* Headline */}
+          <h2 className="text-3xl sm:text-4xl lg:text-[3.4rem] font-bold text-white leading-[1.08] mb-6">
+            Stop Leaving Revenue on the Table.
+            <br />
+            <span className="italic bg-gradient-to-r from-[#c8102e] via-[#e8193a] to-[#ff2d62] bg-clip-text text-transparent"
+              style={{ fontFamily: "'Playfair Display', serif" }}>
+              Let's Build Your Growth Machine.
+            </span>
+          </h2>
+
+          {/* Sub-copy */}
+          <p className="text-white/45 text-base sm:text-lg max-w-xl mx-auto mb-10">
+            Book a free strategy call and walk away with a custom roadmap, whether you work with us or not.
+          </p>
+
+          {/* Glass trust pills */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
+            initial={{ opacity: 0, y: 14 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 flex-wrap"
           >
-            <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Transform your business <span className="bg-gradient-to-r from-[#b40623] to-[#a90404e2] bg-clip-text text-transparent">Now!</span>
-              <div className="relative inline-block">
-                <span className="relative">
-                  <span className="absolute left-0 top-1/2 h-0.5 w-full bg-gradient-to-r from-[#c8102e] to-[#ff2d62] transform -translate-y-1/2"></span>
-                </span>
-              </div>
-            </h2>
-
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="mt-8"
-            >
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05, 
-                  backgroundColor: "#000",
-                  boxShadow: "0 0 20px rgba(255, 45, 98, 0.5)"
-                }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => window.open("https://calendly.com/wolfwisemedia/letsmakesomemoney", "_blank")}
-                className="cursor-pointer group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#c8102e] to-[#ff2d62] px-8 py-3 text-lg font-medium text-white transition-all duration-300 hover:bg-opacity-90 border border-transparent hover:border-white hover:shadow-xl"
+            {bullets.map((b, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 px-4 py-2 rounded-full"
+                style={{ background: "rgba(255,255,255,0.04)", boxShadow: "0 0 0 1px rgba(255,255,255,0.07), inset 0 1px 0 rgba(255,255,255,0.07)" }}
               >
-                Let's Collaborate
-                <svg
-                  className="ml-2 h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </motion.button>
-            </motion.div>
+                <BsCheckCircleFill className="text-[#c8102e] text-xs shrink-0" />
+                <span className="text-white/65 text-sm">{b}</span>
+              </div>
+            ))}
           </motion.div>
-        </div>
-      </div>
 
-      {/* Bottom decorative elements */}
-      <div className="absolute bottom-0 left-0 w-full h-2 opacity-50">
-        <svg width="100%" height="100%">
-          <path 
-            d="M0,10 Q250,0 500,10 T1000,10" 
-            stroke="url(#footerGradient)" 
-            strokeWidth="2" 
-            fill="none"
-          />
-          <defs>
-            <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#c8102e" />
-              <stop offset="50%" stopColor="#ff2d62" />
-              <stop offset="100%" stopColor="#c8102e" />
-            </linearGradient>
-          </defs>
-        </svg>
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(200,16,46,0.5)" }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => window.open("https://calendly.com/wolfwisemedia/letsmakesomemoney", "_blank")}
+              className="cursor-pointer group inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold text-[0.95rem]"
+              style={{
+                background: "linear-gradient(135deg, #c8102e, #e8193a)",
+                boxShadow: "0 0 0 1px rgba(200,16,46,0.5), 0 8px 32px rgba(200,16,46,0.25), inset 0 1px 0 rgba(255,255,255,0.15)"
+              }}
+              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+            >
+              Book Your Free Strategy Call
+              <motion.span
+                className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center"
+                whileHover={{ scale: 1.15, x: 1, y: -0.5 }}
+                transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+              >
+                <FaArrowRight size={12} />
+              </motion.span>
+            </motion.button>
+
+            <motion.a
+              href="mailto:hello@blixn.io"
+              whileHover={{ scale: 1.03, color: "#fff" }}
+              className="text-white/40 text-sm hover:text-white/70 transition-colors duration-300 underline underline-offset-4"
+              transition={{ duration: 0.25 }}
+            >
+              Or email hello@blixn.io
+            </motion.a>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
